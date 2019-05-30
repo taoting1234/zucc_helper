@@ -5,10 +5,10 @@ from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.service import bind_user, unbind_user
 from app.libs.weixin import Weixin
-from app.models.user import get_user_by_openid, get_user_by_user_id
+from app.models.user import get_user_by_openid, get_user_by_user_id, modify_user
 from app.models.user_log import user_log
 from app.models.zf_user import get_zf_user_by_user_id
-from app.validators.forms import BindForm, CodeForm
+from app.validators.forms import BindForm, CodeForm, ModifyUserForm
 
 api = Redprint('user')
 
@@ -63,9 +63,21 @@ def get_auth_status_api():
 @login_required
 def get_user_info_api():
     zf_user = get_zf_user_by_user_id(current_user.id)
-    if zf_user is None:
-        return jsonify({'code': -1})
+    if zf_user:
+        zf_username = zf_user.username
+    else:
+        zf_username = None
     return jsonify({
         'code': 0,
-        'id': zf_user.username
+        'username': zf_username,
+        'xq': current_user.xq,
+        'xn': current_user.xn
     })
+
+
+@api.route("/modify_user_info", methods=['POST'])
+@login_required
+def modify_user_info_api():
+    form = ModifyUserForm().validate_for_api()
+    modify_user(current_user.id, form.xn.data, form.xq.data)
+    return Success()

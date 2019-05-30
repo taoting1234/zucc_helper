@@ -12,6 +12,11 @@
           "type": "view",
           "name": "修改订阅列表",
           "url": "http://wx-web.newitd.com/auth.html?module=subscription"
+        },
+        {
+          "type": "view",
+          "name": "用户中心",
+          "url": "http://wx-web.newitd.com/auth.html?module=user_center"
         }
       ]
     },

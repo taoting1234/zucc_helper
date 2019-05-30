@@ -9,6 +9,7 @@ api = Redprint('system')
 @api.route('/get_default_info', methods=['POST'])
 def get_default_info_api():
     return jsonify({
+        'code': 0,
         'xn': get_value('default_xn'),
         'xq': get_value('default_xq')
     })

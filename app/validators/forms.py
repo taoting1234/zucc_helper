@@ -8,8 +8,8 @@ from app.validators.base import BaseForm as Form
 
 
 class BindForm(Form):
-    username = StringField(validators=[DataRequired(message='username不能为空')])
-    password = StringField(validators=[DataRequired(message='password不能为空')])
+    username = StringField(validators=[DataRequired(message='用户名不能为空')])
+    password = StringField(validators=[DataRequired(message='密码不能为空')])
 
 
 class CodeForm(Form):
@@ -17,17 +17,22 @@ class CodeForm(Form):
 
 
 class SubscriptionForm(Form):
-    website_id = IntegerField(validators=[DataRequired(message='website_id不能为空')])
+    website_id = IntegerField(validators=[DataRequired(message='网站id不能为空')])
     is_subscribe = BooleanField()
 
     def validate_website_id(self, value):
         if not get_website(value.data):
-            raise ValidationError('website_id不存在')
+            raise ValidationError('网站id不存在')
 
     def validate_is_subscribe(self, value):
         if value.data:
             if is_subscribe(current_user.id, self.website_id.data):
-                raise ValidationError('website已订阅')
+                raise ValidationError('该网站已订阅')
         else:
             if not is_subscribe(current_user.id, self.website_id.data):
-                raise ValidationError('website未订阅')
+                raise ValidationError('该网站未订阅')
+
+
+class ModifyUserForm(Form):
+    xn = StringField(validators=[DataRequired(message='学年不能为空')])
+    xq = StringField(validators=[DataRequired(message='学期不能为空')])

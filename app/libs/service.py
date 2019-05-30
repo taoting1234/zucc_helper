@@ -59,7 +59,9 @@ def get_grade(user_id):
     if zf_user is None:
         Weixin.send_text(user.openid, '你还没有绑定账号，请先绑定账号')
         return
-    zf = ZfSpider(zf_user.username, zf_user.password, get_value('default_xn'), get_value('default_xq'))
+    xn = user.xn if user.xn else get_value('default_xn')
+    xq = user.xq if user.xq else get_value('default_xq')
+    zf = ZfSpider(zf_user.username, zf_user.password, xn, xq)
     try:
         zf.login()
         r = zf.get_grade()
@@ -88,7 +90,9 @@ def get_examination_room(user_id):
     if zf_user is None:
         Weixin.send_text(user.openid, '你还没有绑定账号，请先绑定账号')
         return
-    zf = ZfSpider(zf_user.username, zf_user.password, get_value('default_xn'), get_value('default_xq'))
+    xn = user.xn if user.xn else get_value('default_xn')
+    xq = user.xq if user.xq else get_value('default_xq')
+    zf = ZfSpider(zf_user.username, zf_user.password, xn, xq)
     try:
         zf.login()
         r = zf.get_examination_room()
@@ -109,24 +113,6 @@ def get_examination_room(user_id):
             'number': i['座位号']
         })
     Weixin.send_text(user.openid, s)
-    try:
-        r = zf.get_makeup_examination_room()
-    except Exception as e:
-        return
-
-    s = MAKEUP_EXAMINATION_ROOM_TEXT_TITLE.format(**{
-        'id': zf.id,
-        'xn': zf.xn,
-        'xq': zf.xq
-    })
-    for i in r:
-        s += MAKEUP_EXAMINATION_ROOM_TEXT_ITEM.format(**{
-            'class_name': i['课程名称'],
-            'time': i['时间'],
-            'classroom': i['教室'],
-            'number': i['座位号']
-        })
-    Weixin.send_text(user.openid, s)
 
 
 def get_makeup_examination_room(user_id):
@@ -135,7 +121,9 @@ def get_makeup_examination_room(user_id):
     if zf_user is None:
         Weixin.send_text(user.openid, '你还没有绑定账号，请先绑定账号')
         return
-    zf = ZfSpider(zf_user.username, zf_user.password, get_value('default_xn'), get_value('default_xq'))
+    xn = user.xn if user.xn else get_value('default_xn')
+    xq = user.xq if user.xq else get_value('default_xq')
+    zf = ZfSpider(zf_user.username, zf_user.password, xn, xq)
     try:
         zf.login()
         r = zf.get_makeup_examination_room()

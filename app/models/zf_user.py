@@ -35,3 +35,4 @@ def delete_zf_user(username):
     if zf_user:
         with db.auto_commit():
             db.session.delete(zf_user)
+        return zf_user.user_id

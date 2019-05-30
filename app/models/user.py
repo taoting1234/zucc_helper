@@ -11,6 +11,8 @@ class User(UserMixin, Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     openid = Column(String(100), unique=True)
+    xn = Column(String(50))
+    xq = Column(String(50))
 
 
 def create_user(openid):
@@ -26,6 +28,13 @@ def get_user_by_openid(openid):
     if user is None:
         user = create_user(openid)
     return user
+
+
+def modify_user(user_id, xn, xq):
+    user = User.query.get(user_id)
+    with db.auto_commit():
+        user.xn = xn
+        user.xq = xq
 
 
 @login_manager.user_loader

@@ -53,3 +53,7 @@ def task_get_makeup_examination_room(user_id):
     app = create_app()
     with app.app_context():
         get_makeup_examination_room(user_id)
+
+
+if __name__ == '__main__':
+    task_get_makeup_examination_room(1)
