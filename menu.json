@@ -1,0 +1,39 @@
+{
+  "button": [
+    {
+      "name": "用户",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "绑定教务系统",
+          "url": "http://wx-web.newitd.com/auth.html?module=bind_user"
+        },
+        {
+          "type": "view",
+          "name": "修改订阅列表",
+          "url": "http://wx-web.newitd.com/auth.html?module=subscription"
+        }
+      ]
+    },
+    {
+      "name": "查询",
+      "sub_button": [
+        {
+          "type": "click",
+          "name": "查成绩",
+          "key": "grade"
+        },
+        {
+          "type": "click",
+          "name": "查考场",
+          "key": "examination_room"
+        },
+        {
+          "type": "click",
+          "name": "查补考考场",
+          "key": "makeup_examination_room"
+        }
+      ]
+    }
+  ]
+}

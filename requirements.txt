@@ -1,0 +1,15 @@
+beautifulsoup4
+celery
+Faker
+Flask
+Flask-Cors
+Flask-Login
+Flask-SQLAlchemy
+lxml
+Pillow
+PyExecJS
+PyMySQL
+requests
+selenium
+WTForms
+xmltodict
