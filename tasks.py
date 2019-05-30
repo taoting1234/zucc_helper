@@ -6,9 +6,8 @@ import requests
 from app import create_app
 from app.libs.logger import logger
 from app.libs.service import (get_examination_room, get_grade,
-                              get_makeup_examination_room)
+                              get_makeup_examination_room, push_all_title)
 from celery import Celery
-from celery.schedules import crontab
 
 if platform.system() == 'Windows':
     # 解决windows运行worker错误
@@ -22,7 +21,8 @@ celery.config_from_object('app.config.secure')
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(10, heartbeat, name='heartbeat')
+    sender.add_periodic_task(60, heartbeat, name='heartbeat')
+    sender.add_periodic_task(600, task_push_all_title, name='task_push_all_title')
 
 
 @celery.task
@@ -55,5 +55,12 @@ def task_get_makeup_examination_room(user_id):
         get_makeup_examination_room(user_id)
 
 
+@celery.task
+def task_push_all_title():
+    app = create_app()
+    with app.app_context():
+        push_all_title()
+
+
 if __name__ == '__main__':
-    task_get_makeup_examination_room(1)
+    task_push_all_title()

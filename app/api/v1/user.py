@@ -1,14 +1,15 @@
 from flask import jsonify
-from flask_login import current_user, login_required, login_user, logout_user
 
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.service import bind_user, unbind_user
 from app.libs.weixin import Weixin
-from app.models.user import get_user_by_openid, get_user_by_user_id, modify_user
+from app.models.user import (get_user_by_openid, get_user_by_user_id,
+                             modify_user)
 from app.models.user_log import user_log
 from app.models.zf_user import get_zf_user_by_user_id
 from app.validators.forms import BindForm, CodeForm, ModifyUserForm
+from flask_login import current_user, login_required, login_user, logout_user
 
 api = Redprint('user')
 

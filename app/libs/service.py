@@ -5,7 +5,7 @@ from app.models.config import get_value
 from app.models.subscription import get_user_list
 from app.models.title import create_title, is_exist_title
 from app.models.user import get_user_by_user_id
-from app.models.website import get_website
+from app.models.website import get_website, get_website_list
 from app.models.zf_user import (bind_zf_user, delete_zf_user,
                                 get_zf_user_by_user_id)
 from spider.apps.zf.zf_spider import ZfSpider
@@ -161,6 +161,12 @@ def get_title_list(website_id):
         return ZuccJsxySpider().get_article_list(ZuccJsxyConstant.XSGZ_DEKT)
     elif website_id == 7:
         return ZuccJsxySpider().get_article_list(ZuccJsxyConstant.JXJW_JXTZ)
+
+
+def push_all_title():
+    website_list = get_website_list()
+    for i in website_list:
+        push_title(i['id'])
 
 
 def push_title(website_id):

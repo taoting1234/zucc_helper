@@ -33,7 +33,7 @@ def weixin_api():
                     task_get_grade.delay(user.id)
                 if rcv_dict.get('EventKey') == 'examination_room':
                     task_get_examination_room.delay(user.id)
-                if rcv_dict.get('EventKey') == 'make_up_examination_room':
+                if rcv_dict.get('EventKey') == 'makeup_examination_room':
                     task_get_makeup_examination_room.delay(user.id)
 
         return 'success'

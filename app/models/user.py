@@ -1,9 +1,9 @@
-from flask_login import UserMixin
 from sqlalchemy import Column, Integer, String
 
 from app import login_manager
 from app.libs.error_code import AuthFailed
 from app.models.base import Base, db
+from flask_login import UserMixin
 
 
 class User(UserMixin, Base):
