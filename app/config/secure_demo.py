@@ -19,3 +19,8 @@ CELERY_TIMEZONE = 'Asia/Shanghai'
 AppID = ''
 AppSecret = ''
 token = ''
+
+# 定义模板
+INITIATIVE_UNBIND_TEMPLATE_ID = ''  # 主动解绑提醒
+PASSIVE_UNBIND_TEMPLATE_ID = ''  # 被动解绑提醒
+PUSH_TEMPLATE_ID = ''  # 消息推送

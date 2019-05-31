@@ -1,5 +1,6 @@
 from flask import request
 
+from app.config.setting import *
 from app.libs.redprint import Redprint
 from app.libs.weixin import Weixin
 from app.libs.xmlparser import XmlParser
@@ -35,5 +36,7 @@ def weixin_api():
                     task_get_examination_room.delay(user.id)
                 if rcv_dict.get('EventKey') == 'makeup_examination_room':
                     task_get_makeup_examination_room.delay(user.id)
+            elif rcv_dict.get('Event') == 'subscribe':
+                Weixin.send_text(rcv_dict['FromUserName'], SUBSCRIBE_TEXT, rcv_dict['ToUserName'])
 
         return 'success'

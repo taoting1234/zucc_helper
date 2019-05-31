@@ -1,3 +1,4 @@
+from app.config.secure import *
 from app.config.setting import *
 from app.libs.error_code import APIException
 from app.libs.weixin import Weixin
@@ -23,7 +24,6 @@ def bind_user(user_id, username, password):
         raise APIException('错误原因:' + str(e), 200, -1)
     unbind_user_id = delete_zf_user(username)
     if unbind_user_id:
-        template_id = "7zACHUwTpDHJj3oyFI3k8vMR7ZT75MMLElwdyeJKZN8"
         data = {
             "username": {
                 "value": username,
@@ -31,7 +31,7 @@ def bind_user(user_id, username, password):
             }
         }
         url = "http://wx-web.newitd.com/auth.html?module=bind_user"
-        Weixin.send_template_text(get_user_by_user_id(unbind_user_id).openid, template_id, data, url)
+        Weixin.send_template_text(get_user_by_user_id(unbind_user_id).openid, PASSIVE_UNBIND_TEMPLATE_ID, data, url)
 
     bind_zf_user(user_id, username, password)
 
@@ -40,7 +40,6 @@ def unbind_user(user_id):
     zf_user = get_zf_user_by_user_id(user_id)
     if not zf_user:
         raise APIException('用户未绑定', 200, -1)
-    template_id = "p0F-dV34celqEG0eZRoIHwnNv4zrZzB5WWSbMGT7brs"
     data = {
         "username": {
             "value": zf_user.username,
@@ -48,7 +47,7 @@ def unbind_user(user_id):
         }
     }
     url = "http://wx-web.newitd.com/auth.html?module=bind_user"
-    Weixin.send_template_text(get_user_by_user_id(user_id).openid, template_id, data, url)
+    Weixin.send_template_text(get_user_by_user_id(user_id).openid, INITIATIVE_UNBIND_TEMPLATE_ID, data, url)
 
     delete_zf_user(zf_user.username)
 
@@ -180,7 +179,6 @@ def push_title(website_id):
     user_list = get_user_list(website_id)
 
     if push_list:
-        template_id = "oDZBjTsJXbKivd2bE6LXKgzJKLgYQw35i6jZcFRWdj0"
         data = {
             "item": {
                 "value": get_website(website_id).name,
@@ -197,4 +195,4 @@ def push_title(website_id):
         }
         url = push_list[0]['url']
         for i in user_list:
-            Weixin.send_template_text(i.openid, template_id, data, url)
+            Weixin.send_template_text(i.openid, PUSH_TEMPLATE_ID, data, url)
