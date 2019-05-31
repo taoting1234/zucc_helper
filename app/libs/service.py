@@ -27,7 +27,7 @@ def bind_user(user_id, username, password):
         data = {
             "username": {
                 "value": username,
-                "color": "red"
+                "color": "#FF0000"
             }
         }
         url = "http://wx-web.newitd.com/auth.html?module=bind_user"
@@ -43,7 +43,7 @@ def unbind_user(user_id):
     data = {
         "username": {
             "value": zf_user.username,
-            "color": "red"
+            "color": "#FF0000"
         }
     }
     url = "http://wx-web.newitd.com/auth.html?module=bind_user"
@@ -182,15 +182,15 @@ def push_title(website_id):
         data = {
             "item": {
                 "value": get_website(website_id).name,
-                "color": "red"
+                "color": "#FF0000"
             },
             "title": {
                 "value": push_list[0]['title'],
-                "color": "red"
+                "color": "#FF0000"
             },
             "time": {
                 "value": push_list[0]['time'],
-                "color": "red"
+                "color": "#FF0000"
             }
         }
         url = push_list[0]['url']
