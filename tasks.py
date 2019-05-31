@@ -2,12 +2,12 @@ import os
 import platform
 
 import requests
+from celery import Celery
 
 from app import create_app
 from app.libs.logger import logger
 from app.libs.service import (get_examination_room, get_grade,
                               get_makeup_examination_room, push_all_title)
-from celery import Celery
 
 if platform.system() == 'Windows':
     # 解决windows运行worker错误

@@ -1,3 +1,5 @@
+from urllib.error import HTTPError
+
 from app.config.secure import *
 from app.config.setting import *
 from app.libs.error_code import APIException
@@ -20,8 +22,10 @@ def bind_user(user_id, username, password):
     zf = ZfSpider(username, password)
     try:
         zf.login()
+    except HTTPError as e:
+        raise APIException('连接教务系统失败：' + str(e), 200, -1)
     except Exception as e:
-        raise APIException('错误原因:' + str(e), 200, -1)
+        raise APIException('绑定用户失败：' + str(e), 200, -1)
     unbind_user_id = delete_zf_user(username)
     if unbind_user_id:
         data = {
@@ -64,8 +68,14 @@ def get_grade(user_id):
     try:
         zf.login()
         r = zf.get_grade()
+    except HTTPError as e:
+        Weixin.send_text(user.openid, '连接教务系统失败' + str(e))
+        return
+    except AssertionError:
+        Weixin.send_text(user.openid, '切换学年学期失败，可能该学期不存在或者没有该学期信息')
+        return
     except Exception as e:
-        Weixin.send_text(user.openid, '获取成绩失败:\n错误原因:' + str(e))
+        Weixin.send_text(user.openid, '获取信息失败：' + str(e))
         return
 
     s = GRADE_TEXT_TITLE.format(**{
@@ -95,8 +105,14 @@ def get_examination_room(user_id):
     try:
         zf.login()
         r = zf.get_examination_room()
+    except HTTPError as e:
+        Weixin.send_text(user.openid, '连接教务系统失败' + str(e))
+        return
+    except AssertionError:
+        Weixin.send_text(user.openid, '切换学年学期失败，可能该学期不存在或者没有该学期信息')
+        return
     except Exception as e:
-        Weixin.send_text(user.openid, '获取考场失败:\n错误原因:' + str(e))
+        Weixin.send_text(user.openid, '获取信息失败：' + str(e))
         return
 
     s = EXAMINATION_ROOM_TEXT_TITLE.format(**{
@@ -126,8 +142,14 @@ def get_makeup_examination_room(user_id):
     try:
         zf.login()
         r = zf.get_makeup_examination_room()
+    except HTTPError as e:
+        Weixin.send_text(user.openid, '连接教务系统失败' + str(e))
+        return
+    except AssertionError:
+        Weixin.send_text(user.openid, '切换学年学期失败，可能该学期不存在或者没有该学期信息')
+        return
     except Exception as e:
-        Weixin.send_text(user.openid, '获取补考考场失败:\n错误原因:' + str(e))
+        Weixin.send_text(user.openid, '获取信息失败：' + str(e))
         return
 
     s = MAKEUP_EXAMINATION_ROOM_TEXT_TITLE.format(**{

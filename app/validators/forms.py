@@ -1,9 +1,10 @@
-from app.models.subscription import is_subscribe
-from app.models.website import get_website
-from app.validators.base import BaseForm as Form
 from flask_login import current_user
 from wtforms import BooleanField, IntegerField, StringField
 from wtforms.validators import DataRequired, ValidationError
+
+from app.models.subscription import is_subscribe
+from app.models.website import get_website
+from app.validators.base import BaseForm as Form
 
 
 class BindForm(Form):

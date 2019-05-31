@@ -1,4 +1,5 @@
 from flask import jsonify
+from flask_login import current_user, login_required
 
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
@@ -6,7 +7,6 @@ from app.models.subscription import (get_subscription_list, subscribe,
                                      unsubscribe)
 from app.models.user_log import user_log
 from app.validators.forms import SubscriptionForm
-from flask_login import current_user, login_required
 
 api = Redprint('subscription')
 
